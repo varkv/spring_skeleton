@@ -1,5 +1,6 @@
 package ru.kvk.skeleton.module.system_user.entity.dto;
 
+import ru.kvk.skeleton.module.system_user.entity.SystemRoleEntity;
 import ru.kvk.skeleton.module.system_user.entity.enums.SystemRole;
 
 import java.util.Date;
@@ -12,6 +13,13 @@ public class SystemRoleDto {
     protected String id;
     protected Date recDate;
     protected SystemRole systemRole;
+
+    public SystemRoleDto() {}
+    public SystemRoleDto(SystemRoleEntity systemRoleEntity) {
+        this.id = systemRoleEntity.getId();
+        this.recDate = systemRoleEntity.getRecDate();
+        this.systemRole = systemRoleEntity.getSystemRole();
+    }
 
     public String getId() {
         return id;

@@ -4,24 +4,26 @@ import ru.kvk.skeleton.module.system_user.entity.SystemRoleEntity;
 import ru.kvk.skeleton.module.system_user.entity.SystemUserEntity;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by King on 07.01.2016.
  */
 public class SystemUserWithRolesDto extends SystemUserLiteDto {
 
-    public SystemUserWithRolesDto(SystemUserEntity systemUserEntity, Collection<SystemRoleEntity> systemRolesCollection) {
+    private Collection<SystemRoleDto> systemRolesCollection;
+
+    public SystemUserWithRolesDto(SystemUserEntity systemUserEntity) {
         super(systemUserEntity);
-        this.systemRolesCollection = systemRolesCollection;
+        this.systemRolesCollection = systemUserEntity.getSystemRolesCollection().stream().map(SystemRoleDto::new)
+                .collect(Collectors.toList());
     }
 
-    private Collection<SystemRoleEntity> systemRolesCollection;
-
-    public Collection<SystemRoleEntity> getSystemRolesCollection() {
+    public Collection<SystemRoleDto> getSystemRolesCollection() {
         return systemRolesCollection;
     }
 
-    public void setSystemRolesCollection(Collection<SystemRoleEntity> systemRolesCollection) {
+    public void setSystemRolesCollection(Collection<SystemRoleDto> systemRolesCollection) {
         this.systemRolesCollection = systemRolesCollection;
     }
 }

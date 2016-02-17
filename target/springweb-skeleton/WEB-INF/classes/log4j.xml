@@ -27,6 +27,9 @@
     <logger name="org.hibernate">
         <level value="DEBUG"/>
     </logger>
+    <logger name="ru.kvk">
+        <level value="DEBUG"/>
+    </logger>
 
     <root>
         <level value="DEBUG" />

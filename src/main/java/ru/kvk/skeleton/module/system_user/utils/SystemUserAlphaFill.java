@@ -29,8 +29,8 @@ public class SystemUserAlphaFill {
     public void fillSystemUsersAtStartUp(){
         logger.info("Alpha version! Start fill users and roles");
         Map<String,SystemRole[]> users = new HashMap<>();
-        users.put("user1",new SystemRole[]{SystemRole.ROLE_SYSTEM_USER_ADMIN});
-        users.put("user",new SystemRole[]{SystemRole.ROLE_SYSTEM_USER_ADMIN});
+        users.put("user1",new SystemRole[]{SystemRole.ROLE_SYSTEM_USER_ADMIN,SystemRole.ROLE_GUEST});
+        users.put("user",new SystemRole[]{SystemRole.ROLE_SYSTEM_USER_ADMIN,SystemRole.ROLE_TEST1});
         users.forEach((name, strings) -> {
             SystemUserEntity systemUser = new SystemUserEntity();
             systemUser.setLogin(name);

@@ -2,22 +2,19 @@ package ru.kvk.skeleton.module.system_user.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import ru.kvk.skeleton.module.system_user.entity.SystemUserEntity;
 import ru.kvk.skeleton.module.system_user.entity.dto.SystemUserLiteDto;
+import ru.kvk.skeleton.module.system_user.entity.dto.SystemUserWithRolesDto;
 import ru.kvk.skeleton.module.system_user.service.SystemUserService;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 /**
@@ -33,8 +30,9 @@ public class SystemUserAdminController {
     SystemUserService systemUserService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(ModelAndView model){
+    public String index(Model model){
         logger.debug("Request on /module/system_user/admin/");
+        model.addAttribute("roles",systemUserService.gelListUserRoleName());
         return moduleViewPath+"main";
     }
 
@@ -48,6 +46,18 @@ public class SystemUserAdminController {
         Collection<SystemUserLiteDto>  res =  systemUserService.gelListUser().stream().map(systemUserEntity ->  new SystemUserLiteDto(systemUserEntity)).collect(Collectors.toList());
         System.out.println(res);
         return res;
+    }
+
+    @RequestMapping(value = "/{guid}",
+            method = RequestMethod.GET
+            ,produces = MediaType.APPLICATION_JSON_VALUE
+            ,consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public @ResponseBody SystemUserWithRolesDto getUserFullData(
+            @PathVariable(value = "guid") String guid
+    ){
+        logger.debug("Request on /module/system_user/admin get user full data");
+        return systemUserService.getSystemUserWithRoles(guid);
     }
 
 }
